@@ -40,6 +40,7 @@ int main()
         if (!strcmp(argv[i - 3], "prompt") && !strcmp(argv[i - 2], "="))
         {
             strcpy(prompt, argv[i - 1]);
+            continue;
         }
         else if (!strcmp(argv[0], "echo"))
         {
@@ -58,7 +59,15 @@ int main()
             }
             continue;
         }
-
+        else if (!strcmp(argv[0], "cd"))
+        {
+            if (chdir((argv[1])) != 0)
+            {
+                printf("Erro Somthing Bad Happened :(\n");
+                return 1;
+            }
+            continue;
+        }
         /* Does command line end with & */
         if (!strcmp(argv[i - 1], "&"))
         {
