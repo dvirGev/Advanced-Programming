@@ -64,7 +64,6 @@ int main()
             if (chdir((argv[1])) != 0)
             {
                 printf("Erro Somthing Bad Happened :(\n");
-                return 1;
             }
             continue;
         }
