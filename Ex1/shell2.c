@@ -6,7 +6,7 @@
 #include "stdlib.h"
 #include "unistd.h"
 #include <string.h>
-//hi
+// hi
 int main()
 {
     char command[1024];
@@ -37,11 +37,6 @@ int main()
         if (argv[0] == NULL)
             continue;
 
-        if (!strcmp(argv[i - 3], "prompt") && !strcmp(argv[i - 2], "="))
-        {
-            strcpy(prompt, argv[i - 1]);
-            continue;
-        }
         else if (!strcmp(argv[0], "echo"))
         {
             if (!strcmp(argv[1], "$?"))
@@ -57,6 +52,11 @@ int main()
                 }
                 printf("\n");
             }
+            continue;
+        }
+        else if (!strcmp(argv[0], "prompt"))
+        {
+            strcpy(prompt, argv[3]);
             continue;
         }
         else if (!strcmp(argv[0], "cd"))
