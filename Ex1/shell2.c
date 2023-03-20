@@ -18,13 +18,15 @@ int main()
     char last[1024] = "echo dvir the king";
     while (1)
     {
-        strcpy(last, "");
-        for (size_t i = 0; argv[i] != NULL; i++)
+        if(argv[0] != NULL)
         {
-            strcat(last, argv[i]);
-            strcat(last, " ");
+            strcpy(last, "");
+            for (size_t i = 0; argv[i] != NULL; i++)
+            {
+                strcat(last, argv[i]);
+                strcat(last, " ");
+            }
         }
-
         printf("%s: ", prompt);
         fgets(command, 1024, stdin);
         command[strlen(command) - 1] = '\0';
