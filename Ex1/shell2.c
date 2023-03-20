@@ -73,14 +73,22 @@ int main()
             /* redirection of IO ? */
             if(redirect == 3)
             {
-                fd = open(outfile , O_APPEND | O_CREAT);
-                close(2);
+                if ((fd = open(outfile , O_APPEND | O_CREAT | O_WRONLY , 0660)) < 0)
+                {
+                    perror("Problem in opening the file in append mode");
+                    exit(1);
+                }
+                close(STDOUT_FILENO);
                 dup(fd);
                 close(fd);
             }
-            else if(redirect)
+            else if(redirect) 
             {
-                fd = creat(outfile, 0660);
+                if((fd = creat(outfile, 0660)) < 0)
+                {
+                    perror("Problem in opening the file in create mode");
+                    exit(1);
+                }
                 close(redirect);
                 dup(fd);
                 close(fd);

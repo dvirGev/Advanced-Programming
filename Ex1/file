@@ -1,1 +1,21 @@
 rm: cannot remove 'no': No such file or directory
+total 100
+-rwxrwxr-x 1 ariel ariel 17304 Mar 20 11:33 a.out
+-rw-rw-r-- 1 ariel ariel     0 Mar 20 10:21 dvir
+-rw-rw-r-- 1 ariel ariel    50 Mar 20 10:59 file
+-rw-rw-r-- 1 ariel ariel  1074 Mar 20 09:57 key.c
+-rw-rw---- 1 ariel ariel    50 Mar 20 10:26 mylog
+-rw-rw-r-- 1 ariel ariel  1032 Mar 20 09:57 shell1.c
+-rw-rw-r-- 1 ariel ariel  2364 Mar 20 11:33 shell2.c
+-rw-rw-r-- 1 ariel ariel  2687 Mar 20 09:57 shell3.c
+-rw-rw-r-- 1 ariel ariel 54501 Mar 20 09:57 task1.pdf
+total 100
+-rwxrwxr-x 1 ariel ariel 17304 Mar 20 11:33 a.out
+-rw-rw-r-- 1 ariel ariel     0 Mar 20 10:21 dvir
+-rw-rw-r-- 1 ariel ariel   521 Mar 20 11:33 file
+-rw-rw-r-- 1 ariel ariel  1074 Mar 20 09:57 key.c
+-rw-rw---- 1 ariel ariel    50 Mar 20 10:26 mylog
+-rw-rw-r-- 1 ariel ariel  1032 Mar 20 09:57 shell1.c
+-rw-rw-r-- 1 ariel ariel  2364 Mar 20 11:33 shell2.c
+-rw-rw-r-- 1 ariel ariel  2687 Mar 20 09:57 shell3.c
+-rw-rw-r-- 1 ariel ariel 54501 Mar 20 09:57 task1.pdf
