@@ -6,7 +6,7 @@
 #include "stdlib.h"
 #include "unistd.h"
 #include <string.h>
-
+//hi
 int main()
 {
     char command[1024];
