@@ -15,11 +15,16 @@ int main()
     int i, fd, amper, redirect, retid, status;
     char *argv[10];
     char prompt[1024] = "hello";
-    char last[1024] = "dvir the king";
+    char last[1024] = "echo dvir the king";
     while (1)
     {
-        printf("%s\n",command);
-        strcpy(last, command);
+        strcpy(last, "");
+        for (size_t i = 0; argv[i] != NULL; i++)
+        {
+            strcat(last, argv[i]);
+            strcat(last, " ");
+        }
+
         printf("%s: ", prompt);
         fgets(command, 1024, stdin);
         command[strlen(command) - 1] = '\0';
@@ -42,8 +47,8 @@ int main()
         else if (!strcmp(argv[0], "!!"))
         {
             strcpy(command, last);
-            // *parse command line * 
-                i = 0;
+            // *parse command line *
+            i = 0;
             token = strtok(command, " ");
             while (token != NULL)
             {
@@ -53,7 +58,7 @@ int main()
             }
             argv[i] = NULL;
         }
-        
+
         if (!strcmp(argv[0], "echo"))
         {
             if (!strcmp(argv[1], "$?"))
