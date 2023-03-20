@@ -14,10 +14,11 @@ int main()
     char *outfile;
     int i, fd, amper, redirect, retid, status;
     char *argv[10];
+    char prompt[1024] = "hello";
 
     while (1)
     {
-        printf("hello: ");
+        printf("%s: ", prompt);
         fgets(command, 1024, stdin);
         command[strlen(command) - 1] = '\0';
 
@@ -36,6 +37,28 @@ int main()
         if (argv[0] == NULL)
             continue;
 
+        if (!strcmp(argv[i - 3], "prompt") && !strcmp(argv[i - 2], "="))
+        {
+            strcpy(prompt, argv[i - 1]);
+        }
+        else if (!strcmp(argv[0], "echo"))
+        {
+            if (!strcmp(argv[1], "$?"))
+            {
+                printf("%d\n", status);
+                // strcpy(buffer,status);
+            }
+            else
+            {
+                for (size_t i = 1; argv[i] != NULL; i++)
+                {
+                    printf("%s", argv[i]);
+                }
+                printf("\n");
+            }
+            continue;
+        }
+
         /* Does command line end with & */
         if (!strcmp(argv[i - 1], "&"))
         {
@@ -53,13 +76,13 @@ int main()
         }
         else if (!strcmp(argv[i - 2], "2>"))
         {
-            redirect = 2;   
+            redirect = 2;
             argv[i - 2] = NULL;
             outfile = argv[i - 1];
         }
         else if (!strcmp(argv[i - 2], ">>"))
         {
-            redirect = 3;   
+            redirect = 3;
             argv[i - 2] = NULL;
             outfile = argv[i - 1];
         }
@@ -71,9 +94,9 @@ int main()
         if (fork() == 0)
         {
             /* redirection of IO ? */
-            if(redirect == 3)
+            if (redirect == 3)
             {
-                if ((fd = open(outfile , O_APPEND | O_CREAT | O_WRONLY , 0660)) < 0)
+                if ((fd = open(outfile, O_APPEND | O_CREAT | O_WRONLY, 0660)) < 0)
                 {
                     perror("Problem in opening the file in append mode");
                     exit(1);
@@ -82,9 +105,9 @@ int main()
                 dup(fd);
                 close(fd);
             }
-            else if(redirect) 
+            else if (redirect)
             {
-                if((fd = creat(outfile, 0660)) < 0)
+                if ((fd = creat(outfile, 0660)) < 0)
                 {
                     perror("Problem in opening the file in create mode");
                     exit(1);
