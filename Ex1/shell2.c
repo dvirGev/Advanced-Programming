@@ -6,7 +6,13 @@
 #include "stdlib.h"
 #include "unistd.h"
 #include <string.h>
+#include <signal.h>
 // hi
+void sigint_handler(int signum)
+{
+    printf("\nYou typed Control-C!\n");
+}
+
 int main()
 {
     char command[1024] = "echo ariel the king";
@@ -16,6 +22,8 @@ int main()
     char *argv[10];
     char prompt[1024] = "hello";
     char last[1024] = "echo dvir the king";
+
+    signal(SIGINT, sigint_handler);
     while (1)
     {
         if(argv[0] != NULL)
@@ -45,6 +53,8 @@ int main()
         /* Is command empty */
         if (argv[0] == NULL)
             continue;
+        if(!strcmp(argv[0], "quit"))
+            exit(0);
 
         else if (!strcmp(argv[0], "!!"))
         {
