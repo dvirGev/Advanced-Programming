@@ -8,9 +8,25 @@
 #include <string.h>
 #include <signal.h>
 // hi
+char prompt[1024] = "hello";
+static int run = 0;
+pid_t pid;
+
 void sigint_handler(int signum)
 {
-    printf("\nYou typed Control-C!\n");
+    if(signum == SIGINT) 
+    {
+        if (run) 
+        {
+		    if (kill(pid, SIGINT) == -1)
+                perror("kill");
+        }
+    }
+    else{
+        printf("\nYou typed Control-C!\n");
+        write(1, prompt, strlen(prompt));
+        write(1, ": ", 2);
+    }
 }
 
 int main()
@@ -19,8 +35,7 @@ int main()
     char *token;
     char *outfile;
     int i, fd, amper, redirect, retid, status;
-    char *argv[10];
-    char prompt[1024] = "hello";
+    char *argv[10][10];
     char last[1024] = "echo dvir the king";
 
     signal(SIGINT, sigint_handler);
@@ -136,8 +151,9 @@ int main()
             redirect = 0;
 
         /* for commands not part of the shell command language */
-
-        if (fork() == 0)
+        run = 1;
+        pid = fork();
+        if (pid == 0)
         {
             /* redirection of IO ? */
             if (redirect == 3)
@@ -168,5 +184,6 @@ int main()
         /* parent continues here */
         if (amper == 0)
             retid = wait(&status);
+        run = 0;
     }
 }
