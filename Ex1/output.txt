@@ -1,0 +1,77 @@
+hello: date >> myfile
+hello: cat myfile
+
+
+Sun 16 Apr 2023 01:25:34 AM IDT
+hello: cat myfile
+
+
+Sun 16 Apr 2023 01:25:34 AM IDT
+hello: date -u >> myfile
+hello: cat myfile
+
+
+Sun 16 Apr 2023 01:25:34 AM IDT
+
+Sat 15 Apr 2023 10:26:06 PM UTC
+hello: wc -l < myfile
+
+wc: '<': No such file or directory
+ 4 myfile
+ 4 total
+hello: prompt = hi:
+hi: mkdir mydir
+
+hi: cd mydir
+hi: pwd
+
+/home/ariel/Desktop/Advenced Programing/Advanced-Programming/Ex1/mydir
+hi: touch file1 file2 file3
+
+hi: ls
+
+file1  file2  file3
+hi: !!
+ls 
+
+file1  file2  file3
+hi: echo abc xyz
+abc xyz 
+hi: ls
+
+file1  file2  file3
+hi: echo $?
+0
+hi: ls no_such_file
+
+ls: cannot access 'no_such_file': No such file or directory
+hi: echo $?
+512
+hi: ls no_such_file 2> file
+
+hi: ^CYou typed  Controle-C!
+cat > colors.txt
+blue
+black
+red
+red
+green
+blue
+green
+red
+red
+blue
+hi: cat colors.txt
+
+
+blue
+black
+red
+red
+green
+blue
+green
+red
+red
+blue
+hi: quit

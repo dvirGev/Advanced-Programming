@@ -1,0 +1,33 @@
+date >> myfile
+cat myfile
+date -u >> myfile
+cat myfile
+wc -l < myfile
+prompt = hi:
+mkdir mydir
+cd mydir
+pwd
+touch file1 file2 file3
+ls
+!!
+echo abc xyz
+ls
+echo $?
+ls no_such_file
+echo $?
+ls no_such_file 2> file
+Control-C
+cat > colors.txt
+blue
+black
+red
+red
+green
+blue
+green
+red
+red
+blue
+Control-D
+cat colors.txt
+quit

@@ -9,7 +9,7 @@
 #include <signal.h>
 
 // hi
-char prompt[1024] = "hello";
+char prompt[1024] = "hello:";
 static int run = 0;
 pid_t pid;
 size_t sizeComnds = 0;
@@ -43,6 +43,10 @@ void sigint_handler(int signum)
             if (kill(pid, SIGINT) == -1)
                 perror("kill");
         }
+        else
+        {
+            printf("You typed  Controle-C!\n");
+        }
     }
     else
     {
@@ -51,7 +55,6 @@ void sigint_handler(int signum)
         write(1, ": ", 2);
     }
 }
-
 int main()
 {
     char command[1024] = "echo ariel the king";
@@ -86,14 +89,14 @@ int main()
             last[strlen(last) - 3] = '\0';
         }
         addComnd(last, lastsComs);
-        printf("%s: ", prompt);
+        printf("%s ", prompt);
         fgets(command, 1024, stdin);
         char temp[1024];
         strcpy(temp, command);
         size_t index = sizeComnds;
         while (strlen(temp) >= 3 && temp[0] == '\x1b' && temp[1] == '[')
         {
-            if (index >= 0 && temp[2] == 'A')
+            if (index > 0 && temp[2] == 'A')
             {
                 index--;
             }
@@ -234,6 +237,43 @@ int main()
                     lastVar++;
                 }
             }
+            else if (!strcmp(argv[i][0], "if"))
+            {
+                char externalCommand[1024] = "";
+                int j = 0;
+                while (argv[i][j] != NULL)
+                {
+                    strcat(externalCommand, argv[i][j]);
+                    strcat(externalCommand, " ");
+                    j++;
+                }
+                strcat(externalCommand, "\n");
+                char buf[1024] = "";
+                fgets(buf, 1024, stdin);
+                while (strcmp(buf, "fi\n"))
+                {
+                    strcat(externalCommand, buf);
+                    strcat(externalCommand, " ");
+                    memset(buf, 0, sizeof(buf));
+                    fgets(buf, 1024, stdin);
+                }
+                strcat(externalCommand, "fi\n");
+                system(externalCommand);
+                continue;
+            }
+            // else if (!strcmp(argv[i][0], "pwd"))
+            // {
+            //     char cwd[1024];
+            //     if (getcwd(cwd, sizeof(cwd)) != NULL)
+            //     {
+            //         printf("%s", cwd);
+            //     }
+            //     else
+            //     {
+            //         perror("getcwd() error");
+            //         return 1;
+            //     }
+            // }
             /* Does command line end with & */
             if (!strcmp(&(*argv[i][argc[i] - 1]), "&"))
             {
@@ -242,19 +282,19 @@ int main()
             }
             else
                 amper = 0;
-            if (!strcmp(&(*argv[i][argc[i] - 2]), ">"))
+            if (argc[i] >= 3 && !strcmp(&(*argv[i][argc[i] - 2]), ">"))
             {
                 redirect = 1;
                 argv[i][argc[i] - 2] = NULL;
                 outfile = argv[i][argc[i] - 1];
             }
-            else if (!strcmp(&(*argv[i][argc[i] - 2]), "2>"))
+            else if (argc[i] >= 3 && !strcmp(&(*argv[i][argc[i] - 2]), "2>"))
             {
                 redirect = 2;
                 argv[i][argc[i] - 2] = NULL;
                 outfile = argv[i][argc[i] - 1];
             }
-            else if (!strcmp(&(*argv[i][argc[i] - 2]), ">>"))
+            else if (argc[i] >= 3 && !strcmp(&(*argv[i][argc[i] - 2]), ">>"))
             {
                 redirect = 3;
                 argv[i][argc[i] - 2] = NULL;
@@ -292,6 +332,7 @@ int main()
                     close(fd);
                     /* stdout is now redirected */
                 }
+                printf("\n");
                 execvp(argv[i][0], argv[i]);
             }
             /* parent continues here */
